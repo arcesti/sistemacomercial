@@ -1,19 +1,13 @@
-import Pagina from "./Componentes/Layouts/Pagina";
+import PaginaCli from "./Componentes/Layouts/Pagina";
+import "./styles/global.module.css";
 
 function App() {
-  return (
-    <>
-      <Pagina>
-        <h1>Esta é a página de cadastro de clientes</h1>
-      </Pagina>
-      <Pagina>
-        <h1>Esta é a página de cadastro de produto</h1>
-      </Pagina>
-      <Pagina>
-        <h1>Esta é a página de cadastro de fornecedores</h1>
-      </Pagina>
-    </>
-  );
+	return (
+		<>
+			<PaginaCli>
+			</PaginaCli>
+		</>
+	);
 }
 
 export default App;
