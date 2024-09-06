@@ -5,7 +5,7 @@ export default function PaginaError(props) {
     return (
         <Pagina>
             <Container className='text-center'>
-                <img src={img} />
+                <img src={img} alt="Erro"/>
                 <h1>
                     O recurso solicitado não existe
                 </h1>
