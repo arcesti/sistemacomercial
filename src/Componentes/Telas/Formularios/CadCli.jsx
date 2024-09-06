@@ -1,4 +1,3 @@
-import Titulo from "./Titulo"
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -8,7 +7,6 @@ import Row from 'react-bootstrap/Row';
 export default function CadCli() {
     return (
         <>
-            <Titulo title="Clientes" />
             <Form noValidate>
                 <Row className="mb-4">
                     <Form.Group as={Col} md="12" controlId="validationFormik01">
