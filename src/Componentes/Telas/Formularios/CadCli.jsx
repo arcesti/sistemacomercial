@@ -4,10 +4,11 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 
-export default function CadCli() {
+export default function CadCli(props) {
     return (
         <>
             <Form noValidate>
+
                 <Row className="mb-4">
                     <Form.Group as={Col} md="12" controlId="validationFormik01">
                         <Form.Label>Nome:</Form.Label>
@@ -116,9 +117,16 @@ export default function CadCli() {
                     </Form.Group>
                 </Row>
 
-                <Row className="mb-3">
+                <Row className='mt-2 mb-2'>
+                    <Col md={1}>
+                        <Button type='submit'>Confirmar</Button>
+                    </Col>
+                    <Col md={{offset:1}}> 
+                        <Button onClick={() => {
+                            props.setExibirTabela(true)
+                        }}>Voltar</Button>
+                    </Col>
                 </Row>
-                <Button onSubmit={() => { Event.preventDefault() }} type="submit">Submit form</Button>
             </Form>
         </>
     )
