@@ -1,5 +1,7 @@
 import TelaCadCli from "./Componentes/Telas/TelaCadCli";
 import TelaCadCat from "./Componentes/Telas/TelaCadCat";
+import TelaCadProd from "./Componentes/Telas/TelaCadProd";
+import TelaCadForn from "./Componentes/Telas/TelaCadForn";
 import TelaMenu from "./Componentes/Telas/TelaMenu";
 import Tela404 from './Componentes/Telas/Tela404';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -14,10 +16,8 @@ function App() {
 				<Routes>
 					<Route path="/" element={<TelaMenu />} />
 					<Route path="/cliente" element={<TelaCadCli />} />
-					{/*<Route path="/fornecedor" element={<TelaFornecedor />} />
-					<Route path="/produto" element={<TelaProduto />} />*/
-					}
-					
+					<Route path="/fornecedor" element={<TelaCadForn />} />
+					<Route path="/produto" element={<TelaCadProd />} />
 					<Route path="/categoria" element={<TelaCadCat />} />
 					<Route path="*" element={<Tela404 />} />
 				</Routes>
