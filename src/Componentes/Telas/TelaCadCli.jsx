@@ -15,7 +15,7 @@ export default function TelaCadCli(props) {
                         Cadastro de clientes
                     </h2>
                 </Alert>
-                {exibirTabela ? <TabCliente listaDeClientes={clientes} setExibirTabela={setExibirTabela} /> : <CadCli setExibirTabela={setExibirTabela}/>}
+                {exibirTabela ? <TabCliente listaDeClientes={clientes} setExibirTabela={setExibirTabela} /> : <CadCli listaDeClientes={clientes} setExibirTabela={setExibirTabela}/>}
             </Pagina>
         </>
     );
