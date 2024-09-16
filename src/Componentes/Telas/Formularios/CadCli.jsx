@@ -22,7 +22,7 @@ export default function CadCli(props) {
         const form = ev.currentTarget;
         if(form.checkValidity()) {
             //cadastrar o produto
-            props.listaDeClientes.push(cliente);
+            props.setListaDeClientes([...props.listaDeClientes, cliente]);
             //exibir tabela
             props.setExibirTabela(true);
         }

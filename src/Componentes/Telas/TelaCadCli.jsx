@@ -7,6 +7,7 @@ import { clientes } from "../../Dados/mockClientes"
 
 export default function TelaCadCli(props) {
     const [exibirTabela, setExibirTabela] = useState(true);
+    const [listaDeClientes, setListaDeProdutos] = useState([clientes]);
     return (
         <>
             <Pagina>
@@ -15,7 +16,12 @@ export default function TelaCadCli(props) {
                         Cadastro de clientes
                     </h2>
                 </Alert>
-                {exibirTabela ? <TabCliente listaDeClientes={clientes} setExibirTabela={setExibirTabela} /> : <CadCli listaDeClientes={clientes} setExibirTabela={setExibirTabela}/>}
+                {exibirTabela ? <TabCliente listaDeClientes={listaDeClientes}
+                                            setListaDeProdutos={setListaDeProdutos}
+                                            setExibirTabela={setExibirTabela} /> :
+                                <CadCli     listaDeClientes={listaDeClientes}
+                                            setListaDeProdutos={setListaDeProdutos}
+                                            setExibirTabela={setExibirTabela}/>}
             </Pagina>
         </>
     );
