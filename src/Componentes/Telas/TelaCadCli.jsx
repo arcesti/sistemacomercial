@@ -7,7 +7,9 @@ import { clientes } from "../../Dados/mockClientes"
 
 export default function TelaCadCli(props) {
     const [exibirTabela, setExibirTabela] = useState(true);
-    const [listaDeClientes, setListaDeProdutos] = useState([clientes]);
+    const [listaDeClientes, setListaDeClientes] = useState([...clientes]);
+    const [modoDeCadastro, setModoDeCadastro] = useState(true);
+    const [clienteAlter, setClienteAlter] = useState(null);
     return (
         <>
             <Pagina>
@@ -16,11 +18,20 @@ export default function TelaCadCli(props) {
                         Cadastro de clientes
                     </h2>
                 </Alert>
-                {exibirTabela ? <TabCliente listaDeClientes={listaDeClientes}
-                                            setListaDeProdutos={setListaDeProdutos}
+                {exibirTabela ? <TabCliente modoDeCadastro={modoDeCadastro}
+                                            setModoDeCadastro={setModoDeCadastro}
+                                            clienteAlter={clienteAlter}
+                                            setClienteAlter={setClienteAlter}
+                                            listaDeClientes={listaDeClientes}
+                                            setListaDeClientes={setListaDeClientes}
                                             setExibirTabela={setExibirTabela} /> :
-                                <CadCli     listaDeClientes={listaDeClientes}
-                                            setListaDeProdutos={setListaDeProdutos}
+                                            
+                                <CadCli     modoDeCadastro={modoDeCadastro}
+                                            clienteAlter={clienteAlter}
+                                            setClienteAlter={setClienteAlter}
+                                            setModoDeCadastro={setModoDeCadastro}
+                                            listaDeClientes={listaDeClientes}
+                                            setListaDeClientes={setListaDeClientes}
                                             setExibirTabela={setExibirTabela}/>}
             </Pagina>
         </>
