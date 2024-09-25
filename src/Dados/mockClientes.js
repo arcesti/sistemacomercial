@@ -19,6 +19,6 @@ export const clientes = [
         "cidade":"Prudente",
         "cep":"19591111",
         "email":"arcestiricci@hotmail.com",
-        "tel":"996670191"   
+        "tel":"996670191"
     }
-]
+];

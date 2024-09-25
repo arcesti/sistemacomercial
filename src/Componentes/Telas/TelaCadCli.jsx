@@ -3,7 +3,7 @@ import CadCli from "./Formularios/CadCli";
 import Pagina from '../Layouts/Pagina'
 import { useState } from "react";
 import TabCliente from "./Tabelas/TabClientes";
-import { clientes } from "../../Dados/mockClientes"
+import {clientes} from "../../Dados/mockClientes"
 
 export default function TelaCadCli(props) {
     const [exibirTabela, setExibirTabela] = useState(true);
