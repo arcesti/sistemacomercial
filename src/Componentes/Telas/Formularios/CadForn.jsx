@@ -5,20 +5,60 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
 export default function CadForn(props) {
+    const [forn, setForn] = useState({
+        nome: "",
+        cnpj: "",
+        bairro: "",
+        cidade: "",
+        rua: "",
+        numEnd: "",
+        cep: "",
+        tel: "",
+        email: ""
+    })
+
+    function manipularMudancaForn(ev) {
+        const elemento = ev.target.name;
+        const valor = ev.target.value;
+        setForn({ ...forn, [elemento]: valor });
+        console.log(`componente: ${elemento} : ${valor}`);
+    }
+
+    function mmanipularFornAlter(ev) {
+        const elemento = ev.target.name;
+        const valor = ev.target.value;
+        props.setFornAlter({ ...props.fornAlter, [elemento]: valor })
+    }
+
     const [validated, setValidated] = useState(false);
-
-    const handleSubmit = (event) => {
+    function manipularSubmissao(event) {
         const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
+        if (form.checkValidity()) {
+            if (props.props.modoCadastro) {
+                //cadastrar fornecedor
+                props.setListaForn([...props.listaForn, forn]);
+                props.setExibirTabela(true);
+            }
+            else {
+                props.setListaForn(props.fornAlter.filter((forn) => {
+                    if (forn.cnpj === props.fornAlter.cnpj) {
+                        return props.fornAlter.cnpj;
+                    }
+                    return forn;
+                }))
+                props.setExibirTabela(true);
+            }
 
-        setValidated(true);
+        } 
+        else {
+            setValidated(true);
+        }
+        event.preventDefault();
+        event.stopPropagation();
     };
 
     return (
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form noValidate validated={validated} onSubmit={manipularSubmissao}>
             <Row className="mb-4">
                 <Form.Group as={Col} md="12">
                     <Form.Label>Nome: </Form.Label>
@@ -28,8 +68,8 @@ export default function CadForn(props) {
                         placeholder="Nome"
                         id='nome'
                         name='nome'
-                    /*value={forn.nome}
-                    onChange={manipularMudancaForn}*/
+                        value={props.modoCadastro ? forn.nome : props.fornAlter.nome}
+                        onChange={props.modoCadastro ? manipularMudancaForn : mmanipularFornAlter}
                     />
                     <Form.Control.Feedback type='invalid'>
                         Por favor insira um Nome
@@ -46,8 +86,9 @@ export default function CadForn(props) {
                         placeholder="Cnpj"
                         id='cnpj'
                         name='cnpj'
-                    /*value={forn.cnpj}
-                    onChange={manipularMudancaForn}*/
+                        disabled={!props.modoCadastro}
+                        value={props.modoCadastro ? forn.cnpj : props.fornAlter.cnpj}
+                        onChange={props.modoCadastro ? manipularMudancaForn : mmanipularFornAlter}
                     />
                     <Form.Control.Feedback type='invalid'>
                         Por favor insira um cnpj
@@ -61,8 +102,8 @@ export default function CadForn(props) {
                         placeholder="Bairro"
                         id='bairro'
                         name='bairro'
-                        /*value={forn.bairro}
-                        onChange={manipularMudancaForn}*/
+                        value={props.modoCadastro ? forn.bairro : props.fornAlter.bairro}
+                        onChange={props.modoCadastro ? manipularMudancaForn : mmanipularFornAlter}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -77,8 +118,8 @@ export default function CadForn(props) {
                         required
                         id='cidade'
                         name='cidade'
-                    /*value={forn.cidade}
-                    onChange={manipularMudancaForn}*/
+                        value={props.modoCadastro ? forn.cidade : props.fornAlter.cidade}
+                        onChange={props.modoCadastro ? manipularMudancaForn : mmanipularFornAlter}
                     />
                     <Form.Control.Feedback type="invalid">
                         Por favor insira uma cidade
@@ -93,8 +134,8 @@ export default function CadForn(props) {
                         placeholder="Rua"
                         id='rua'
                         name='rua'
-                        /*value={forn.rua}
-                        onChange={manipularMudancaForn}*/
+                        value={props.modoCadastro ? forn.rua : props.fornAlter.rua}
+                        onChange={props.modoCadastro ? manipularMudancaForn : mmanipularFornAlter}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -108,8 +149,8 @@ export default function CadForn(props) {
                         placeholder="Número do endereço"
                         id='numEnd'
                         name='numEnd'
-                        /*value={forn.numEnd}
-                        onChange={manipularMudancaForn}*/
+                        value={props.modoCadastro ? forn.numEnd : props.fornAlter.numEnd}
+                        onChange={props.modoCadastro ? manipularMudancaForn : mmanipularFornAlter}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -123,8 +164,8 @@ export default function CadForn(props) {
                         placeholder="Cep"
                         id='cep'
                         name='cep'
-                        /*value={forn.cep}
-                        onChange={manipularMudancaForn}*/
+                        value={props.modoCadastro ? forn.cep : props.fornAlter.cep}
+                        onChange={props.modoCadastro ? manipularMudancaForn : mmanipularFornAlter}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -140,8 +181,8 @@ export default function CadForn(props) {
                         placeholder="Telefone"
                         id='tel'
                         name='tel'
-                        /*value={forn.tel}
-                        onChange={manipularMudancaForn}*/
+                        value={props.modoCadastro ? forn.tel : props.fornAlter.tel}
+                        onChange={props.modoCadastro ? manipularMudancaForn : mmanipularFornAlter}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -155,8 +196,8 @@ export default function CadForn(props) {
                         placeholder="E-mail"
                         id='email'
                         name='email'
-                        /*value={forn.email}
-                        onChange={manipularMudancaForn}*/
+                        value={props.modoCadastro ? forn.email : props.fornAlter.email}
+                        onChange={props.modoCadastro ? manipularMudancaForn : mmanipularFornAlter}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -164,7 +205,16 @@ export default function CadForn(props) {
                     </Form.Control.Feedback>
                 </Form.Group>
             </Row>
-            <Button type="submit">Cadastrar</Button>
+            <Row className='mt-2 mb-2'>
+                <Col md={1}>
+                    <Button type='submit'>Confirmar</Button>
+                </Col>
+                <Col md={{ offset: 1 }}>
+                    <Button onClick={() => {
+                        props.setExibirTabela(true)
+                    }}>Voltar</Button>
+                </Col>
+            </Row>
         </Form>
     );
 }

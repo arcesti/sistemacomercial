@@ -5,18 +5,18 @@ export const fornecedores = [
         "bairro":"Centro",
         "cidade":"Taciba",
         "rua":"Moises Calixto",
-        "num":"90",
+        "numEnd":"90",
         "cep":"19590000",
         "tel":"996670191",
         "email":"arcesti15@gmail.com"
     },
     {
         "nome":"Arcesti Ricci",
-        "cnpj":"49227487840",
+        "cnpj":"49227487841",
         "bairro":"Centro",
         "cidade":"Taciba",
         "rua":"Moises Calixto",
-        "num":"90",
+        "numEnd":"90",
         "cep":"19590000",
         "tel":"996670191",
         "email":"arcesti15@gmail.com"  

@@ -7,6 +7,9 @@ import { fornecedores } from "../../Dados/mockFornecedores"
 
 export default function TelaCadForn(props) {
     const [exibirTabela, setExibirTabela] = useState(true);
+    const [listaForn, setListaForn] = useState([...fornecedores]);
+    const [modoCadastro, setModoCadastro] = useState(false);
+    const [fornAlter, setFornAlter] = useState(null);
     return (
         <>
             <Pagina>
@@ -15,7 +18,21 @@ export default function TelaCadForn(props) {
                         Cadastro de fornecedores
                     </h2>
                 </Alert>
-                {exibirTabela ? <TabFornecedor listaDeFornecedores={fornecedores} setExibirTabela={setExibirTabela} /> : <CadForn setExibirTabela={setExibirTabela}/>}
+                {exibirTabela ? <TabFornecedor listaForn={listaForn}
+                                               setListaForn={setListaForn}
+                                               modoCadastro={modoCadastro}
+                                               setModoCadastro={setModoCadastro}
+                                               fornAlter={fornAlter}
+                                               setFornAlter={setFornAlter}
+                                               setExibirTabela={setExibirTabela} /> 
+                                : 
+                                <CadForn listaForn={listaForn}
+                                         setListaForn={setListaForn}
+                                         modoCadastro={modoCadastro}
+                                         setModoCadastro={setModoCadastro}
+                                         fornAlter={fornAlter}
+                                         setFornAlter={setFornAlter}
+                                         setExibirTabela={setExibirTabela}/>}
             </Pagina>
         </>
     );
