@@ -22,7 +22,9 @@ export default function CadProd(props) {
     }
 
     function manipularProdAlter(ev) {
-
+        const elemento = ev.target.name;
+        const valor = ev.target.value;
+        props.setProdAlter({...props.prodAlter, [elemento]: valor});
     }
 
     const [validated, setValidated] = useState(false);
@@ -34,7 +36,13 @@ export default function CadProd(props) {
                 props.setExibirTabela(true);
             }
             else {
-
+                props.setListaProdutos(props.listaProdutos.map((prod) => {
+                    if(prod.cod === props.prodAlter.cod) {
+                        return props.prodAlter;
+                    }
+                    return prod;
+                }))
+                props.setExibirTabela(true);
             }
         }
         else {
@@ -54,6 +62,7 @@ export default function CadProd(props) {
                             type="text"
                             name="cod"
                             value={props.modoCadastro ? produto.cod : props.prodAlter.cod}
+                            disabled={!props.modoCadastro}
                             onChange={props.modoCadastro ? manipularMudancaProd : manipularProdAlter}
                             required
                         />

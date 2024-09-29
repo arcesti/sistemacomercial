@@ -17,6 +17,8 @@ export default function Menu(props) {
                             <NavDropdown.Item as={Link} to="/fornecedor">Fornecedores
                             </NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/produto">Produtos</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/usuario">Usuarios</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/entregador">Entregadores</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item as={Link} to="/categoria">
                                 Categorias

@@ -10,6 +10,7 @@ export default function TabProduto(props) {
     }
 
     function alterarProduto(produto) {
+        props.setExibirTabela(false);
         props.setProdAlter(produto);
     }
 

@@ -86,6 +86,7 @@ export default function CadForn(props) {
                         placeholder="Cnpj"
                         id='cnpj'
                         name='cnpj'
+                        disabled={!props.modoCadastro}
                         value={props.modoCadastro ? forn.cnpj : props.fornAlter.cnpj}
                         onChange={props.modoCadastro ? manipularMudancaForn : mmanipularFornAlter}
                     />

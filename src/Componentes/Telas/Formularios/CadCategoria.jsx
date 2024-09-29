@@ -1,20 +1,65 @@
-/*import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-export default function FormularioCategoria(props) {
-    //método render
+export default function CadCat(props) {
+    const [categoria, setCategoria] = useState({
+        cod: "",
+        descr: ""
+    })
+
+    function manipulaMudancaCat(ev) {
+        const elemento = ev.target.name;
+        const valor = ev.target.value;
+        setCategoria({ ...categoria, [elemento]: valor });
+    }
+
+    function manipulaAlterCat(ev) {
+        const elemento = ev.target.name;
+        const valor = ev.target.value;
+        props.setCatAlter({ ...props.catAlter, [elemento]: valor });
+    }
+
+    const [validated, setValidated] = useState(false);
+    function submissao(ev) {
+        const form = ev.currentTarget;
+        if (form.checkValidity()) {
+            if (props.modoCadastro) {
+                props.setListaCategorias([...props.listaCategorias, categoria]);
+                props.setExibirTabela(true);
+            }
+            else {
+                props.setListaCategorias(props.listaCategorias.map((cat) => {
+                    if(cat.cod === props.catAlter.cod) {
+                        return props.catAlter;
+                    }
+                    return cat;
+                }))
+                props.setExibirTabela(true);
+            }
+        }
+        else {
+            setValidated(true);
+        }
+        ev.stopPropagation();
+        ev.preventDefault();
+    }
     return (
-        <Form >
+        <Form validated={validated} onSubmit={submissao}>
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="">
                     <Form.Label>Código</Form.Label>
                     <Form.Control
                         required
-                        type="codigo"
-                        placeholder="Código do Produto"
-                        defaultValue=""
+                        type="text"
+                        id="cod"
+                        name="cod"
+                        placeholder="Código"
+                        disabled={!props.modoCadastro}
+                        value={props.modoCadastro ? categoria.cod : props.catAlter.cod}
+                        onChange={props.modoCadastro ? manipulaMudancaCat : manipulaAlterCat}
                     />
                     <Form.Control.Feedback>Muito bem!</Form.Control.Feedback>
                 </Form.Group>
@@ -23,117 +68,25 @@ export default function FormularioCategoria(props) {
                     <Form.Control
                         required
                         type="text"
-                        placeholder="Descrição do Produto"
+                        id="descr"
+                        name="descr"
+                        placeholder="Descrição"
+                        value={props.modoCadastro ? categoria.descr : props.catAlter.descr}
+                        onChange={props.modoCadastro ? manipulaMudancaCat : manipulaAlterCat}
                     />
                     <Form.Control.Feedback>Muito bem!</Form.Control.Feedback>
                 </Form.Group>
             </Row>
-            <Form.Group className="mb-3">
-                <Form.Check
-                    required
-                    label="Concordo com os termos e diretrizes."
-                    feedback="Você precisa concordar para continuar."
-                    feedbackType="invalid"
-                />
-            </Form.Group>
-            <Button type="submit">Cadastrar</Button>
+            <Row className='mt-2 mb-2'>
+                    <Col md={1}>
+                        <Button type='submit'>Confirmar</Button>
+                    </Col>
+                    <Col md={{ offset: 1 }}>
+                        <Button onClick={() => {
+                            props.setExibirTabela(true)
+                        }}>Voltar</Button>
+                    </Col>
+                </Row>
         </Form >
     );
-}*/
-
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
-
-function FormExample() {
-    const [validated, setValidated] = useState(false);
-
-    const handleSubmit = (event) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-
-        setValidated(true);
-    };
-
-    return (
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <Row className="mb-3">
-                <Form.Group as={Col} md="4" controlId="validationCustom01">
-                    <Form.Label>First name</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        placeholder="First name"
-                        defaultValue="Mark"
-                    />
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="4" controlId="validationCustom02">
-                    <Form.Label>Last name</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        placeholder="Last name"
-                        defaultValue="Otto"
-                    />
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                    <Form.Label>Username</Form.Label>
-                    <InputGroup hasValidation>
-                        <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                        <Form.Control
-                            type="text"
-                            placeholder="Username"
-                            aria-describedby="inputGroupPrepend"
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            Please choose a username.
-                        </Form.Control.Feedback>
-                    </InputGroup>
-                </Form.Group>
-            </Row>
-            <Row className="mb-3">
-                <Form.Group as={Col} md="6" controlId="validationCustom03">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control type="text" placeholder="City" required />
-                    <Form.Control.Feedback type="invalid">
-                        Please provide a valid city.
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="3" controlId="validationCustom04">
-                    <Form.Label>State</Form.Label>
-                    <Form.Control type="text" placeholder="State" required />
-                    <Form.Control.Feedback type="invalid">
-                        Please provide a valid state.
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="3" controlId="validationCustom05">
-                    <Form.Label>Zip</Form.Label>
-                    <Form.Control type="text" placeholder="Zip" required />
-                    <Form.Control.Feedback type="invalid">
-                        Please provide a valid zip.
-                    </Form.Control.Feedback>
-                </Form.Group>
-            </Row>
-            <Form.Group className="mb-3">
-                <Form.Check
-                    required
-                    label="Agree to terms and conditions"
-                    feedback="You must agree before submitting."
-                    feedbackType="invalid"
-                />
-            </Form.Group>
-            <Button type="submit">Submit form</Button>
-        </Form>
-    );
 }
-
-export default FormExample;
