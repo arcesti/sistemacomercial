@@ -34,18 +34,18 @@ export default function CadForn(props) {
     function manipularSubmissao(event) {
         const form = event.currentTarget;
         if (form.checkValidity()) {
-            if (props.props.modoCadastro) {
+            if (props.modoCadastro) {
                 //cadastrar fornecedor
                 props.setListaForn([...props.listaForn, forn]);
                 props.setExibirTabela(true);
             }
             else {
-                props.setListaForn(props.fornAlter.filter((forn) => {
-                    if (forn.cnpj === props.fornAlter.cnpj) {
-                        return props.fornAlter.cnpj;
+                props.setListaForn(props.listaForn.map((item) => {
+                    if (item.cnpj === props.fornAlter.cnpj) {
+                        return props.fornAlter;
                     }
-                    return forn;
-                }))
+                    return item;
+                }));
                 props.setExibirTabela(true);
             }
 
@@ -86,7 +86,6 @@ export default function CadForn(props) {
                         placeholder="Cnpj"
                         id='cnpj'
                         name='cnpj'
-                        disabled={!props.modoCadastro}
                         value={props.modoCadastro ? forn.cnpj : props.fornAlter.cnpj}
                         onChange={props.modoCadastro ? manipularMudancaForn : mmanipularFornAlter}
                     />

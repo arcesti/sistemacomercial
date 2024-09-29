@@ -8,7 +8,7 @@ import { fornecedores } from "../../Dados/mockFornecedores"
 export default function TelaCadForn(props) {
     const [exibirTabela, setExibirTabela] = useState(true);
     const [listaForn, setListaForn] = useState([...fornecedores]);
-    const [modoCadastro, setModoCadastro] = useState(false);
+    const [modoCadastro, setModoCadastro] = useState(true);
     const [fornAlter, setFornAlter] = useState(null);
     return (
         <>
