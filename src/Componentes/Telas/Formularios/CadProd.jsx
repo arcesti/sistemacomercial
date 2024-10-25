@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import { Spinner } from 'react-bootstrap';
+import { consultarCat } from '../../../Services/catService.js';
+import toast, { Toaster } from 'react-hot-toast'
 
 export default function CadProd(props) {
     const [produto, setProduto] = useState({
@@ -13,7 +16,24 @@ export default function CadProd(props) {
         estq: "",
         urlImg: "",
         dtValidade: ""
-    })
+    });
+    const [categorias, setCategorias] = useState([]);
+    const [validated, setValidated] = useState(false);
+    const [temCategoria, setTemCategoria] = useState(false);
+
+    useEffect(() => {
+        consultarCat()
+            .then((res) => {
+                if (Array.isArray(res)) {
+                    setCategorias(res);
+                    setTemCategoria(true);
+                }
+            })
+            .catch((error) => {
+                setTemCategoria(false)
+                toast.error("Não foi possivel carregar as categorrias")
+            })
+    }, []);
 
     function manipularMudancaProd(ev) {
         const elemento = ev.target.name;
@@ -24,10 +44,9 @@ export default function CadProd(props) {
     function manipularProdAlter(ev) {
         const elemento = ev.target.name;
         const valor = ev.target.value;
-        props.setProdAlter({...props.prodAlter, [elemento]: valor});
+        props.setProdAlter({ ...props.prodAlter, [elemento]: valor });
     }
 
-    const [validated, setValidated] = useState(false);
     function manipularSubmissao(ev) {
         const form = ev.currentTarget;
         if (form.checkValidity()) {
@@ -37,7 +56,7 @@ export default function CadProd(props) {
             }
             else {
                 props.setListaProdutos(props.listaProdutos.map((prod) => {
-                    if(prod.cod === props.prodAlter.cod) {
+                    if (prod.cod === props.prodAlter.cod) {
                         return props.prodAlter;
                     }
                     return prod;
@@ -128,7 +147,7 @@ export default function CadProd(props) {
                 </Row>
 
                 <Row className="mb-4">
-                    <Form.Group as={Col} md="6" >
+                    <Form.Group as={Col} md="4" >
                         <Form.Label>URL imagem:</Form.Label>
                         <Form.Control
                             type="text"
@@ -142,7 +161,7 @@ export default function CadProd(props) {
                         </Form.Control.Feedback>
                     </Form.Group>
 
-                    <Form.Group as={Col} md="6" >
+                    <Form.Group as={Col} md="3" >
                         <Form.Label>Data válidade:</Form.Label>
                         <Form.Control
                             type="date"
@@ -154,6 +173,23 @@ export default function CadProd(props) {
                         />
                         <Form.Control.Feedback type="invalid">
                         </Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group as={Col} md="4" >
+                        <Form.Label>Categoria:</Form.Label>
+                        <Form.Select id='categoria' name='categoria' required>
+                            {
+                                categorias.map((cat) => {
+                                    return <option value={cat.codigo}>
+                                        {cat.descr}
+                                    </option>
+                                })
+                            }
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group as={Col} md={1}>
+                        {
+                            !temCategoria ? <Spinner className='mt-4' animation="border" variant="success"></Spinner> : ""
+                        }
                     </Form.Group>
                 </Row>
 
@@ -168,6 +204,9 @@ export default function CadProd(props) {
                     </Col>
                 </Row>
             </Form>
+            {
+                !temCategoria ? <Toaster position="top-right"></Toaster> : ""
+            }
         </>
     )
 }
