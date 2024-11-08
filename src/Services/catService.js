@@ -1,4 +1,4 @@
-const urlBase = 'http://localhost:3000/categorias';
+const urlBase = 'https://backend-sistemacomercial.vercel.app/categorias';
 
 export async function gravarCat(categoria) {
     const res = await fetch(urlBase, {

@@ -1,8 +1,8 @@
 import { Button, Container, Table } from "react-bootstrap";
 export default function TabProduto(props) {
-    
+
     function excluirProduto(produto) {
-        if(window.confirm(`Deseja excluir o produto de código: ${produto.cod}`)) {
+        if (window.confirm(`Deseja excluir o produto de código: ${produto.cod}`)) {
             props.setListaProdutos(props.listaProdutos.filter((prod) => {
                 return prod.cod !== produto.cod;
             }))
