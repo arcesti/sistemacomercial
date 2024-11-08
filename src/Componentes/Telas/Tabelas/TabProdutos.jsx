@@ -38,13 +38,13 @@ export default function TabProduto(props) {
                             props.listaProdutos?.map((produto) => {
                                 return (
                                     <tr>
-                                        <td>{produto.cod}</td>
-                                        <td>{produto.descr}</td>
-                                        <td>{produto.preCusto}</td>
-                                        <td>{produto.preVenda}</td>
-                                        <td>{produto.estq}</td>
+                                        <td>{produto.codigo}</td>
+                                        <td>{produto.descricao}</td>
+                                        <td>{produto.precoCusto}</td>
+                                        <td>{produto.precoVenda}</td>
+                                        <td>{produto.qtdEstoque}</td>
                                         <td><img style={{ width: '2rem', height: '2rem' }} src={produto.urlImg} alt="Camiseta" /></td>
-                                        <td>{produto.dtValidade}</td>
+                                        <td>{produto.dataValidade}</td>
                                         <td>
                                             <Button onClick={() => {
                                                 props.setModoCadastro(false);

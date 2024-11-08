@@ -1,15 +1,24 @@
 import { Alert } from "react-bootstrap";
 import CadProd from "./Formularios/CadProd";
 import Pagina from '../Layouts/Pagina'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TabProdutos from "./Tabelas/TabProdutos";
-import { produtos } from "../../Dados/mockProdutos"
+import { consultarProd } from "../../Services/prodService";
+//import { produtos } from "../../Dados/mockProdutos"
 
-export default function TelaCadCli(props) {
-    const [listaProdutos, setListaProdutos] = useState([...produtos]);
+export default function TelaCadProd(props) {
+    const [listaProdutos, setListaProdutos] = useState([]);
     const [exibirTabela, setExibirTabela] = useState(true);
     const [modoCadastro, setModoCadastro] = useState(true);
     const [prodAlter, setProdAlter] = useState(null);
+
+    useEffect(() => {
+        consultarProd()
+        .then((res) => {
+            setListaProdutos(res)
+        })
+    }, [])
+
     return (
         <>
             <Pagina>

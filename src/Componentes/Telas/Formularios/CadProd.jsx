@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import { Spinner } from 'react-bootstrap';
 import { consultarCat } from '../../../Services/catService.js';
 import toast, { Toaster } from 'react-hot-toast'
+import { gravarProd } from '../../../Services/prodService.js';
 
 export default function CadProd(props) {
     const [produto, setProduto] = useState({
@@ -15,7 +16,8 @@ export default function CadProd(props) {
         preVenda: "",
         estq: "",
         urlImg: "",
-        dtValidade: ""
+        dtValidade: "",
+        categoria:{}
     });
     const [categorias, setCategorias] = useState([]);
     const [validated, setValidated] = useState(false);
@@ -35,6 +37,10 @@ export default function CadProd(props) {
             })
     }, []);
 
+    function selecionarCat(ev) {
+        setProduto({... produto, categoria:{codigo: ev.currentTarget.value}})
+    }
+
     function manipularMudancaProd(ev) {
         const elemento = ev.target.name;
         const valor = ev.target.value;
@@ -51,8 +57,15 @@ export default function CadProd(props) {
         const form = ev.currentTarget;
         if (form.checkValidity()) {
             if (props.modoCadastro) {
-                props.setListaProdutos([...props.listaProdutos, produto]);
-                props.setExibirTabela(true);
+                gravarProd(produto)
+                .then((res) => {
+                    if(res.status) {
+                        props.setExibirTabela(true)
+                    }
+                    else {
+                        toast.error(res.message)
+                    }
+                })
             }
             else {
                 props.setListaProdutos(props.listaProdutos.map((prod) => {
@@ -176,7 +189,7 @@ export default function CadProd(props) {
                     </Form.Group>
                     <Form.Group as={Col} md="4" >
                         <Form.Label>Categoria:</Form.Label>
-                        <Form.Select id='categoria' name='categoria' required>
+                        <Form.Select id='categoria' name='categoria' onChange={selecionarCat} required>
                             {
                                 categorias.map((cat) => {
                                     return <option value={cat.codigo}>
