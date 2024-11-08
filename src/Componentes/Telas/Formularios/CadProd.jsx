@@ -10,8 +10,8 @@ import { gravarProd } from '../../../Services/prodService.js';
 
 export default function CadProd(props) {
     const [produto, setProduto] = useState({
-        cod: "",
-        descr: "",
+        codigo: "",
+        descricao: "",
         preCusto: "",
         preVenda: "",
         estq: "",
@@ -69,7 +69,7 @@ export default function CadProd(props) {
             }
             else {
                 props.setListaProdutos(props.listaProdutos.map((prod) => {
-                    if (prod.cod === props.prodAlter.cod) {
+                    if (prod.codigo === props.prodAlter.codigo) {
                         return props.prodAlter;
                     }
                     return prod;
@@ -92,21 +92,20 @@ export default function CadProd(props) {
                         <Form.Label>Código:</Form.Label>
                         <Form.Control
                             type="text"
-                            name="cod"
-                            value={props.modoCadastro ? produto.cod : props.prodAlter.cod}
+                            name="codigo"
+                            value={props.modoCadastro ? produto.codigo : props.prodAlter.codigo}
                             disabled={!props.modoCadastro}
                             onChange={props.modoCadastro ? manipularMudancaProd : manipularProdAlter}
-                            required
                         />
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col} md="9" >
-                        <Form.Label>Descrição</Form.Label>
+                        <Form.Label>descricaoição</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Descrição:"
-                            name="descr"
-                            value={props.modoCadastro ? produto.descr : props.prodAlter.descr}
+                            placeholder="descricaoição:"
+                            name="descricao"
+                            value={props.modoCadastro ? produto.descricao : props.prodAlter.descricao}
                             onChange={props.modoCadastro ? manipularMudancaProd : manipularProdAlter}
                             required
                         />
@@ -193,7 +192,7 @@ export default function CadProd(props) {
                             {
                                 categorias.map((cat) => {
                                     return <option value={cat.codigo}>
-                                        {cat.descr}
+                                        {cat.descricaoicao}
                                     </option>
                                 })
                             }

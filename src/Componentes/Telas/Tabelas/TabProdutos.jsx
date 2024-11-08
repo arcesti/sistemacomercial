@@ -1,17 +1,35 @@
 import { Button, Container, Table } from "react-bootstrap";
+import { excluirProd, alterarProd } from "../../../Services/prodService";
+
 export default function TabProduto(props) {
 
     function excluirProduto(produto) {
         if (window.confirm(`Deseja excluir o produto de código: ${produto.cod}`)) {
-            props.setListaProdutos(props.listaProdutos.filter((prod) => {
-                return prod.cod !== produto.cod;
-            }))
+            excluirProd(produto)
+                .then((res) => {
+                    if (res.status) {
+                        props.setListaProdutos(props.listaProdutos.filter((prod) => {
+                            return prod.cod !== produto.cod;
+                        }))
+                    }
+                    else {
+                        alert("Não foi possível excluir o produto: " + res.mensagem);
+                    }
+                })
         }
     }
 
     function alterarProduto(produto) {
-        props.setExibirTabela(false);
-        props.setProdAlter(produto);
+        alterarProd(produto)
+            .then((res) => {
+                if (res.status) {
+                    props.setExibirTabela(false);
+                    props.setProdAlter(produto);
+                }
+                else {
+                    alert(`Nãio foi possível alterar seu produto: ${res.mensagem}`)
+                }
+            })
     }
 
     return (
