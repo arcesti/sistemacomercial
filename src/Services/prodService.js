@@ -1,6 +1,12 @@
 const urlBase = 'https://backend-sistemacomercial.vercel.app/produtos';
 
+function formatarData(data) {
+    const [ano, mes, dia] = data.split("-");
+    return `${dia}/${mes}/${ano}`;
+}
+
 export async function gravarProd(produto) {
+    produto.dtValidade = formatarData(produto.dtValidade)
     const res = await fetch(urlBase, {
         'method':"POST",
         'headers': {
@@ -9,11 +15,14 @@ export async function gravarProd(produto) {
         'body': JSON.stringify(produto)
     });
     const resultado = await res.json();
+    console.log(resultado)
     return resultado;
 }
 
 export async function alterarProd(produto) {
-    const res = await fetch(urlBase, {
+    produto.dtValidade = formatarData(produto.dtValidade)
+    console.log(produto)
+    const res = await fetch(urlBase+"/"+produto.codigo, {
         'method':"PUT",
         'headers': {
             'Content-Type': "application/json"
@@ -21,6 +30,7 @@ export async function alterarProd(produto) {
         'body': JSON.stringify(produto)
     });
     const resultado = await res.json();
+    console.log(resultado)
     return resultado;
 }
 

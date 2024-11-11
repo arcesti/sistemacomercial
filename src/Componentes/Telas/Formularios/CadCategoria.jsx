@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import { gravarCat } from '../../../Services/catService';
 
 export default function CadCat(props) {
     const [categoria, setCategoria] = useState({
@@ -32,7 +33,7 @@ export default function CadCat(props) {
             }
             else {
                 props.setListaCategorias(props.listaCategorias.map((cat) => {
-                    if(cat.cod === props.catAlter.cod) {
+                    if (cat.cod === props.catAlter.cod) {
                         return props.catAlter;
                     }
                     return cat;
@@ -78,15 +79,15 @@ export default function CadCat(props) {
                 </Form.Group>
             </Row>
             <Row className='mt-2 mb-2'>
-                    <Col md={1}>
-                        <Button type='submit'>Confirmar</Button>
-                    </Col>
-                    <Col md={{ offset: 1 }}>
-                        <Button onClick={() => {
-                            props.setExibirTabela(true)
-                        }}>Voltar</Button>
-                    </Col>
-                </Row>
+                <Col md={1}>
+                    <Button type='submit'>Confirmar</Button>
+                </Col>
+                <Col md={{ offset: 1 }}>
+                    <Button onClick={() => {
+                        props.setExibirTabela(true)
+                    }}>Voltar</Button>
+                </Col>
+            </Row>
         </Form >
     );
 }

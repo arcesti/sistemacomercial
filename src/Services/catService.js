@@ -29,6 +29,7 @@ export async function consultarCat() {
         'method':"GET"
     });
     const resultado = await res.json();
+    console.log(resultado);
     return resultado;
 }
 

@@ -10,14 +10,23 @@ export default function TelaCadProd(props) {
     const [listaProdutos, setListaProdutos] = useState([]);
     const [exibirTabela, setExibirTabela] = useState(true);
     const [modoCadastro, setModoCadastro] = useState(true);
-    const [prodAlter, setProdAlter] = useState(null);
+    const [prodAlter, setProdAlter] = useState({
+        codigo: "",
+        descricao: "",
+        preCusto: "",
+        preVenda: "",
+        estq: "",
+        urlImg: "",
+        dtValidade: "",
+        categoria: {}
+    });
 
     useEffect(() => {
         consultarProd()
         .then((res) => {
             setListaProdutos(res)
         })
-    }, [])
+    }, [,exibirTabela])
 
     return (
         <>

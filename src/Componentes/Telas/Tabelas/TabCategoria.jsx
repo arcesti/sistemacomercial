@@ -33,8 +33,8 @@ export default function TabCategoria(props) {
                             props.listaCategorias?.map((categoria) => {
                                 return (
                                     <tr>
-                                        <td>{categoria.cod}</td>
-                                        <td>{categoria.descr}</td>
+                                        <td>{categoria.codigo}</td>
+                                        <td>{categoria.descricao}</td>
                                         <td>
                                             <Button onClick={() => {
                                                 props.setModoCadastro(false);
