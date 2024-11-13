@@ -62,7 +62,7 @@ export default function TabProduto(props) {
                                         <td>{produto.precoVenda}</td>
                                         <td>{produto.qtdEstoque}</td>
                                         <td><img style={{ width: '2rem', height: '2rem' }} src={produto.urlImg} alt="Camiseta" /></td>
-                                        <td>{produto.dataValidade}</td>
+                                        <td>{new Date(produto.dataValidade).toLocaleDateString()}</td>
                                         <td>
                                             <Button onClick={() => {
                                                 props.setModoCadastro(false);

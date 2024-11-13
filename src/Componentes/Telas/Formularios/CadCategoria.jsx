@@ -32,7 +32,7 @@ export default function CadCat(props) {
             }
             else {
                 props.setListaCategorias(props.listaCategorias.map((cat) => {
-                    if(cat.cod === props.catAlter.cod) {
+                    if (cat.cod === props.catAlter.cod) {
                         return props.catAlter;
                     }
                     return cat;
@@ -47,37 +47,38 @@ export default function CadCat(props) {
         ev.preventDefault();
     }
     return (
-        <Form validated={validated} onSubmit={submissao}>
-            <Row className="mb-3">
-                <Form.Group as={Col} md="4" controlId="">
-                    <Form.Label>Código</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        id="cod"
-                        name="cod"
-                        placeholder="Código"
-                        disabled={!props.modoCadastro}
-                        value={props.modoCadastro ? categoria.cod : props.catAlter.cod}
-                        onChange={props.modoCadastro ? manipulaMudancaCat : manipulaAlterCat}
-                    />
-                    <Form.Control.Feedback>Muito bem!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="5" controlId="">
-                    <Form.Label>Descrição</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        id="descr"
-                        name="descr"
-                        placeholder="Descrição"
-                        value={props.modoCadastro ? categoria.descr : props.catAlter.descr}
-                        onChange={props.modoCadastro ? manipulaMudancaCat : manipulaAlterCat}
-                    />
-                    <Form.Control.Feedback>Muito bem!</Form.Control.Feedback>
-                </Form.Group>
-            </Row>
-            <Row className='mt-2 mb-2'>
+        <>
+            <Form validated={validated} onSubmit={submissao}>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="4" controlId="">
+                        <Form.Label>Código</Form.Label>
+                        <Form.Control
+                            required
+                            type="text"
+                            id="cod"
+                            name="cod"
+                            placeholder="Código"
+                            disabled={!props.modoCadastro}
+                            value={props.modoCadastro ? categoria.cod : props.catAlter.cod}
+                            onChange={props.modoCadastro ? manipulaMudancaCat : manipulaAlterCat}
+                        />
+                        <Form.Control.Feedback>Muito bem!</Form.Control.Feedback>
+                    </Form.Group>
+                    <Form.Group as={Col} md="5" controlId="">
+                        <Form.Label>Descrição</Form.Label>
+                        <Form.Control
+                            required
+                            type="text"
+                            id="descr"
+                            name="descr"
+                            placeholder="Descrição"
+                            value={props.modoCadastro ? categoria.descr : props.catAlter.descr}
+                            onChange={props.modoCadastro ? manipulaMudancaCat : manipulaAlterCat}
+                        />
+                        <Form.Control.Feedback>Muito bem!</Form.Control.Feedback>
+                    </Form.Group>
+                </Row>
+                <Row className='mt-2 mb-2'>
                     <Col md={1}>
                         <Button type='submit'>Confirmar</Button>
                     </Col>
@@ -87,6 +88,7 @@ export default function CadCat(props) {
                         }}>Voltar</Button>
                     </Col>
                 </Row>
-        </Form >
+            </Form >
+        </>
     );
 }
