@@ -15,7 +15,7 @@ export default function TelaCadCat(props) {
             .then((res) => {
                 setListaCategorias(res);
             })
-    }, [exibirTabela]);
+    }, [,exibirTabela]);
     return (
         <>
             <Pagina>

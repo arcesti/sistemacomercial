@@ -1,5 +1,5 @@
 import { Button, Container, Table } from "react-bootstrap";
-import { excluirProd, alterarProd } from "../../../Services/prodService";
+import { excluirProd } from "../../../Services/prodService";
 
 export default function TabProduto(props) {
 

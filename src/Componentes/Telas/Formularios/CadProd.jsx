@@ -60,7 +60,6 @@ export default function CadProd(props) {
         const form = ev.currentTarget;
         if (form.checkValidity()) {
             if (props.modoCadastro) {
-                console.log(produto)
                 gravarProd(produto)
                     .then((res) => {
                         if (res.status) {

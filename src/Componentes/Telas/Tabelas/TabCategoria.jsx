@@ -1,10 +1,20 @@
 import { Button, Container, Table } from "react-bootstrap";
+import { excluirCat } from "../../../Services/catService";
+
 export default function TabCategoria(props) {
     function excluirCategoria(categoria) {
-        if(window.confirm("Deseja realmente excluir o categoria " + categoria.cod)) {
-            props.setListaCategorias(props.listaCategorias.filter((item) => {
-                return item.cod !== categoria.cod;
-            }));
+        if(window.confirm("Deseja realmente excluir a categoria " + categoria.codigo)) {
+            excluirCat(categoria)
+            .then((res) => {
+                if(res.status) {
+                    props.setListaCategorias(props.listaCategorias.filter((cat) => {
+                        return cat.codigo !== categoria.codigo;
+                    }))
+                }
+            })
+            .catch((err) => {
+                alert(`Não foi possivel excluir o produto: ${err}`);
+            })
         }
     }
 

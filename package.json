@@ -1,7 +1,7 @@
 {
   "name": "sistemacomercial",
   "version": "0.1.0",
-  "homepage": "http://arcesti.github.io/sistemacomercial",
+  "homepage": "http://arcesti.github.io/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
