@@ -9,6 +9,8 @@ import Tela404 from './Componentes/Telas/Tela404';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TelaLogin from "./Componentes/Telas/TelaLogin";
 import { useState, createContext } from "react";
+import store from "./redux/store";
+import { Provider } from "react-redux";
 
 export const ContextoUsuario = createContext();
 
@@ -27,24 +29,26 @@ function App() {
 	} else {
 		return (
 			<div>
-				<ContextoUsuario.Provider value={{ usuario, setUsuario }}>
-					<BrowserRouter>
-						{
-							//A ordem das rotas é importante
-						}
-						<Routes>
-							<Route path="/" element={<TelaMenu />} />
-							<Route path="/cliente" element={<TelaCadCli />} />
-							<Route path="/fornecedor" element={<TelaCadForn />} />
-							<Route path="/produto" element={<TelaCadProd />} />
-							<Route path="/usuario" element={<TelaCadUsu />} />
-							<Route path="/categoria" element={<TelaCadCat />} />
-							<Route path="/entregador" element={<TelaCadEntr />} />
-							<Route path="/login" element={<TelaLogin />} />
-							<Route path="*" element={<Tela404 />} />
-						</Routes>
-					</BrowserRouter>
-				</ContextoUsuario.Provider>
+				<Provider store={store}>
+					<ContextoUsuario.Provider value={{ usuario, setUsuario }}>
+						<BrowserRouter>
+							{
+								//A ordem das rotas é importante
+							}
+							<Routes>
+								<Route path="/" element={<TelaMenu />} />
+								<Route path="/cliente" element={<TelaCadCli />} />
+								<Route path="/fornecedor" element={<TelaCadForn />} />
+								<Route path="/produto" element={<TelaCadProd />} />
+								<Route path="/usuario" element={<TelaCadUsu />} />
+								<Route path="/categoria" element={<TelaCadCat />} />
+								<Route path="/entregador" element={<TelaCadEntr />} />
+								<Route path="/login" element={<TelaLogin />} />
+								<Route path="*" element={<Tela404 />} />
+							</Routes>
+						</BrowserRouter>
+					</ContextoUsuario.Provider>
+				</Provider>
 			</div>
 		);
 	}
