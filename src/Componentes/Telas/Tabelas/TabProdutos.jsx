@@ -1,10 +1,10 @@
 import { Button, Container, Table } from "react-bootstrap";
-import { excluirProd, alterarProd } from "../../../Services/prodService";
+import { excluirProd } from "../../../Services/prodService";
 
 export default function TabProduto(props) {
 
     function excluirProduto(produto) {
-        if (window.confirm(`Deseja excluir o produto de código: ${produto.cod}`)) {
+        if (window.confirm(`Deseja excluir o produto de código: ${produto.codigo}`)) {
             excluirProd(produto)
                 .then((res) => {
                     if (res.status) {
@@ -20,16 +20,18 @@ export default function TabProduto(props) {
     }
 
     function alterarProduto(produto) {
-        alterarProd(produto)
-            .then((res) => {
-                if (res.status) {
-                    props.setExibirTabela(false);
-                    props.setProdAlter(produto);
-                }
-                else {
-                    alert(`Nãio foi possível alterar seu produto: ${res.mensagem}`)
-                }
-            })
+        props.setExibirTabela(false);
+        let prodAlter = {
+            "codigo": produto.codigo,
+            "descricao": produto.descricao,
+            "preCusto": produto.precoCusto,
+            "preVenda": produto.precoVenda,
+            "estq": produto.qtdEstoque,
+            "urlImg":produto.urlImagem,
+            "dtValidade": produto.dataValidade,
+            "categoria": { "codigo": produto.categoria.codigo, "descricao": produto.categoria.descricao }
+        }
+        props.setProdAlter(prodAlter);
     }
 
     return (
@@ -37,6 +39,7 @@ export default function TabProduto(props) {
             <Container>
                 <Button className="mb-3" variant="primary" onClick={() => {
                     props.setExibirTabela(false)
+                    props.setModoCadastro(true)
                 }} >
                     Adicionar
                 </Button>
@@ -49,6 +52,7 @@ export default function TabProduto(props) {
                         <th>Estoque</th>
                         <th>Imagem</th>
                         <th>Validade</th>
+                        <th>Categoria</th>
                         <th>Ações</th>
                     </thead>
                     <tbody>
@@ -61,8 +65,9 @@ export default function TabProduto(props) {
                                         <td>{produto.precoCusto}</td>
                                         <td>{produto.precoVenda}</td>
                                         <td>{produto.qtdEstoque}</td>
-                                        <td><img style={{ width: '2rem', height: '2rem' }} src={produto.urlImg} alt="Camiseta" /></td>
-                                        <td>{new Date(produto.dataValidade).toLocaleDateString()}</td>
+                                        <td><img style={{ width: '2rem', height: '2rem' }} src={produto.urlImagem} alt="foto do produto" /></td>
+                                        <td>{produto.dataValidade}</td>
+                                        <td>{produto.categoria.descricao}</td>
                                         <td>
                                             <Button onClick={() => {
                                                 props.setModoCadastro(false);

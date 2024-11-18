@@ -1,6 +1,7 @@
 const urlBase = 'https://backend-sistemacomercial.vercel.app/categorias';
 
 export async function gravarCat(categoria) {
+    console.log(categoria);
     const res = await fetch(urlBase, {
         'method':"POST",
         'headers': {
@@ -13,7 +14,7 @@ export async function gravarCat(categoria) {
 }
 
 export async function alterarCat(categoria) {
-    const res = await fetch(urlBase, {
+    const res = await fetch(urlBase+"/"+categoria.codigo, {
         'method':"PUT",
         'headers': {
             'Content-Type': "application/json"
@@ -21,6 +22,7 @@ export async function alterarCat(categoria) {
         'body': JSON.stringify(categoria)
     });
     const resultado = await res.json();
+    console.log(resultado)
     return resultado;
 }
 
@@ -33,9 +35,11 @@ export async function consultarCat() {
 }
 
 export async function excluirCat(categoria) {
+    console.log(categoria);
     const res = await fetch(urlBase + '/' + categoria.codigo, {
         'method':"DELETE"
     });
     const resultado = await res.json();
+    console.log(res);
     return resultado;
 }

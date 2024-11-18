@@ -3,11 +3,13 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import toast from 'react-hot-toast'
+import { gravarCat, alterarCat } from '../../../Services/catService.js';
 
 export default function CadCat(props) {
     const [categoria, setCategoria] = useState({
         cod: "",
-        descr: ""
+        descricao: ""
     })
 
     function manipulaMudancaCat(ev) {
@@ -27,17 +29,30 @@ export default function CadCat(props) {
         const form = ev.currentTarget;
         if (form.checkValidity()) {
             if (props.modoCadastro) {
-                props.setListaCategorias([...props.listaCategorias, categoria]);
+                //props.setListaCategorias([...props.listaCategorias, categoria]);
+                gravarCat(categoria)
+                    .then((res) => {
+                        if (res.status) {
+                            props.setExibirTabela(true)
+                        }
+                        else {
+                            toast.error(res.message)
+                        }
+                    })
                 props.setExibirTabela(true);
             }
             else {
-                props.setListaCategorias(props.listaCategorias.map((cat) => {
-                    if (cat.cod === props.catAlter.cod) {
-                        return props.catAlter;
+                console.log(props.catAlter)
+                alterarCat(props.catAlter)
+                .then((res) => {
+                    if(res) {
+                        props.setExibirTabela(true);
                     }
-                    return cat;
-                }))
-                props.setExibirTabela(true);
+                    else {
+                        alert(`Não foi possível alterar sua categoria: ${res.mensagem}`)
+                        props.setExibirTabela(true);
+                    }
+                })
             }
         }
         else {
@@ -50,15 +65,15 @@ export default function CadCat(props) {
         <>
             <Form validated={validated} onSubmit={submissao}>
                 <Row className="mb-3">
-                    <Form.Group as={Col} md="4" controlId="">
+=======
+                    <Form.Group as={Col} md="4">
                         <Form.Label>Código</Form.Label>
                         <Form.Control
-                            required
+                            disabled
                             type="text"
                             id="cod"
                             name="cod"
                             placeholder="Código"
-                            disabled={!props.modoCadastro}
                             value={props.modoCadastro ? categoria.cod : props.catAlter.cod}
                             onChange={props.modoCadastro ? manipulaMudancaCat : manipulaAlterCat}
                         />
@@ -69,10 +84,10 @@ export default function CadCat(props) {
                         <Form.Control
                             required
                             type="text"
-                            id="descr"
-                            name="descr"
+                            id="descricao"
+                            name="descricao"
                             placeholder="Descrição"
-                            value={props.modoCadastro ? categoria.descr : props.catAlter.descr}
+                            value={props.modoCadastro ? categoria.descricao : props.catAlter.descricao}
                             onChange={props.modoCadastro ? manipulaMudancaCat : manipulaAlterCat}
                         />
                         <Form.Control.Feedback>Muito bem!</Form.Control.Feedback>

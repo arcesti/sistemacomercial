@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import { Spinner } from 'react-bootstrap';
 import { consultarCat } from '../../../Services/catService.js';
 import toast, { Toaster } from 'react-hot-toast'
-import { gravarProd } from '../../../Services/prodService.js';
+import { gravarProd, alterarProd } from '../../../Services/prodService.js';
 
 export default function CadProd(props) {
     const [produto, setProduto] = useState({
@@ -17,7 +17,7 @@ export default function CadProd(props) {
         estq: "",
         urlImg: "",
         dtValidade: "",
-        categoria:{}
+        categoria: {}
     });
     const [categorias, setCategorias] = useState([]);
     const [validated, setValidated] = useState(false);
@@ -37,8 +37,12 @@ export default function CadProd(props) {
             })
     }, []);
 
+
     function selecionarCat(ev) {
-        setProduto({... produto, categoria:{codigo: ev.currentTarget.value}})
+        if(props.modoCadastro)
+            setProduto({ ...produto, categoria: { codigo: ev.currentTarget.value } })
+        else
+            props.setProdAlter({...props.prodAlter, categoria: { codigo: ev.currentTarget.value } })
     }
 
     function manipularMudancaProd(ev) {
@@ -46,7 +50,6 @@ export default function CadProd(props) {
         const valor = ev.target.value;
         setProduto({ ...produto, [elemento]: valor });
     }
-
     function manipularProdAlter(ev) {
         const elemento = ev.target.name;
         const valor = ev.target.value;
@@ -58,23 +61,25 @@ export default function CadProd(props) {
         if (form.checkValidity()) {
             if (props.modoCadastro) {
                 gravarProd(produto)
-                .then((res) => {
-                    if(res.status) {
-                        props.setExibirTabela(true)
-                    }
-                    else {
-                        toast.error(res.message)
-                    }
-                })
+                    .then((res) => {
+                        if (res.status) {
+                            props.setExibirTabela(true)
+                        }
+                        else {
+                            toast.error(res.message)
+                        }
+                    })
             }
             else {
-                props.setListaProdutos(props.listaProdutos.map((prod) => {
-                    if (prod.codigo === props.prodAlter.codigo) {
-                        return props.prodAlter;
+                alterarProd(props.prodAlter)
+                .then((res) => {
+                    if (res.status) {
+                        props.setExibirTabela(true);
                     }
-                    return prod;
-                }))
-                props.setExibirTabela(true);
+                    else {
+                        alert(`Nãio foi possível alterar seu produto: ${res.mensagem}`)
+                    }
+                })
             }
         }
         else {
@@ -100,10 +105,10 @@ export default function CadProd(props) {
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group as={Col} md="9" >
-                        <Form.Label>descricaoição</Form.Label>
+                        <Form.Label>descricao</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="descricaoição:"
+                            placeholder="descricao:"
                             name="descricao"
                             value={props.modoCadastro ? produto.descricao : props.prodAlter.descricao}
                             onChange={props.modoCadastro ? manipularMudancaProd : manipularProdAlter}
@@ -114,8 +119,6 @@ export default function CadProd(props) {
                     </Form.Group>
                 </Row>
                 <Row className="mb-4">
-
-
                     <Form.Group as={Col} md="3" >
                         <Form.Label>Preço custo:</Form.Label>
                         <Form.Control
@@ -174,7 +177,7 @@ export default function CadProd(props) {
                     </Form.Group>
 
                     <Form.Group as={Col} md="3" >
-                        <Form.Label>Data válidade:</Form.Label>
+                        <Form.Label>Data validade:</Form.Label>
                         <Form.Control
                             type="date"
                             placeholder="Validade"
@@ -192,7 +195,7 @@ export default function CadProd(props) {
                             {
                                 categorias.map((cat) => {
                                     return <option value={cat.codigo}>
-                                        {cat.descricaoicao}
+                                        {cat.descricao}
                                     </option>
                                 })
                             }
